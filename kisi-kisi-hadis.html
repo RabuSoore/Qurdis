@@ -1,0 +1,2145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kisi-Kisi Ulumul Hadis</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --teal: #1A5F6E;
+    --teal-light: #2A8A9F;
+    --teal-dark: #0D3B47;
+    --cream: #F9F4E8;
+    --cream-dark: #EDE5CC;
+    --dark: #0A1A20;
+    --text: #2C1810;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* DECORATIVE BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(26,95,110,0.12) 0%, transparent 50%),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 60px,
+        rgba(201,168,76,0.02) 60px,
+        rgba(201,168,76,0.02) 61px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAVIGATION SIDEBAR */
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 280px;
+    background: linear-gradient(180deg, var(--teal-dark) 0%, #061217 100%);
+    border-right: 1px solid rgba(201,168,76,0.3);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-header {
+    padding: 24px 20px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    text-align: center;
+    background: linear-gradient(135deg, rgba(201,168,76,0.1), transparent);
+  }
+
+  .sidebar-header .arabic-title {
+    font-family: 'Scheherazade New', serif;
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1.3;
+    direction: rtl;
+  }
+
+  .sidebar-header h2 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    opacity: 0.8;
+  }
+
+  .nav-list {
+    list-style: none;
+    padding: 12px 0;
+    flex: 1;
+  }
+
+  .nav-list li a {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 20px;
+    color: rgba(249,244,232,0.7);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 400;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-list li a:hover,
+  .nav-list li a.active {
+    color: var(--gold-light);
+    background: rgba(201,168,76,0.08);
+    border-left-color: var(--gold);
+  }
+
+  .nav-list li a .num {
+    min-width: 22px;
+    height: 22px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .nav-list li a.active .num {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  /* MAIN CONTENT */
+  #main {
+    margin-left: 280px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HOME PAGE */
+  .home-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .home-ornament {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 32px;
+    position: relative;
+  }
+
+  .home-ornament svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .home-arabic {
+    font-family: 'Scheherazade New', serif;
+    font-size: 52px;
+    color: var(--gold);
+    direction: rtl;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    text-shadow: 0 0 40px rgba(201,168,76,0.3);
+  }
+
+  .home-title {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+
+  .home-title span { color: var(--gold); }
+
+  .home-subtitle {
+    font-size: 14px;
+    color: rgba(249,244,232,0.5);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .home-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px;
+    padding: 16px 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: left;
+  }
+
+  .home-card:hover {
+    background: rgba(201,168,76,0.08);
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-2px);
+  }
+
+  .home-card .card-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+
+  .home-card .card-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+
+  /* CONTENT PAGES */
+  .content-page {
+    display: none;
+    padding: 48px 56px;
+    max-width: 900px;
+    animation: fadeUp 0.4s ease;
+  }
+
+  .content-page.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .page-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .page-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .page-title span { color: var(--gold); }
+
+  .page-desc {
+    font-size: 14px;
+    color: rgba(249,244,232,0.5);
+    line-height: 1.7;
+  }
+
+  /* CONTENT BLOCKS */
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    background: var(--gold);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: rgba(201,168,76,0.2); }
+
+  .card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card h4 .icon {
+    width: 28px; height: 28px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .card p {
+    font-size: 13.5px;
+    color: rgba(249,244,232,0.75);
+    line-height: 1.75;
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .card ul li {
+    font-size: 13.5px;
+    color: rgba(249,244,232,0.75);
+    line-height: 1.75;
+    padding: 4px 0;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .card ul li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 8px;
+    top: 8px;
+  }
+
+  /* ARABIC QUOTE BOX */
+  .arabic-box {
+    background: linear-gradient(135deg, rgba(26,95,110,0.15), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    text-align: center;
+  }
+
+  .arabic-box .arabic-text {
+    font-family: 'Scheherazade New', serif;
+    font-size: 24px;
+    color: var(--gold-light);
+    direction: rtl;
+    line-height: 1.8;
+    margin-bottom: 8px;
+  }
+
+  .arabic-box .arabic-label {
+    font-size: 11px;
+    color: rgba(249,244,232,0.4);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* DEFINITION BOX */
+  .def-box {
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
+    border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin: 12px 0;
+  }
+
+  .def-box p {
+    font-size: 13.5px;
+    color: rgba(249,244,232,0.85);
+    line-height: 1.75;
+  }
+
+  /* TABLE */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  table thead tr {
+    background: rgba(201,168,76,0.1);
+  }
+
+  table th {
+    padding: 12px 16px;
+    text-align: left;
+    color: var(--gold-light);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  table td {
+    padding: 11px 16px;
+    color: rgba(249,244,232,0.75);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    line-height: 1.6;
+    vertical-align: top;
+  }
+
+  table tbody tr:last-child td { border-bottom: none; }
+
+  table tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+  /* BADGE PILLS */
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .pill-green { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+  .pill-yellow { background: rgba(234,179,8,0.15); color: #facc15; border: 1px solid rgba(234,179,8,0.2); }
+  .pill-red { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+  .pill-blue { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+
+  /* GRID 2 COL */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+  /* HIGHLIGHT NUMBER */
+  .highlight-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    background: var(--gold);
+    color: var(--dark);
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 900;
+    margin-right: 8px;
+  }
+
+  /* PAGE NAV */
+  .page-nav {
+    display: flex;
+    gap: 12px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    color: rgba(249,244,232,0.6);
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .nav-btn:hover {
+    background: rgba(201,168,76,0.1);
+    border-color: rgba(201,168,76,0.3);
+    color: var(--gold-light);
+  }
+
+  .nav-btn.primary {
+    background: rgba(201,168,76,0.1);
+    border-color: rgba(201,168,76,0.3);
+    color: var(--gold-light);
+    margin-left: auto;
+  }
+
+  /* MOBILE TOGGLE */
+  #menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px; left: 16px;
+    z-index: 200;
+    background: var(--teal-dark);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 8px;
+    width: 40px; height: 40px;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--gold);
+    font-size: 18px;
+  }
+
+  /* ULAMA PROFILE CARD */
+  .ulama-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 22px;
+    transition: all 0.25s;
+  }
+
+  .ulama-card:hover {
+    border-color: rgba(201,168,76,0.25);
+    background: rgba(201,168,76,0.04);
+  }
+
+  .ulama-card .ulama-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+  }
+
+  .ulama-card .ulama-name-ar {
+    font-family: 'Scheherazade New', serif;
+    font-size: 18px;
+    color: var(--gold);
+    direction: rtl;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  .ulama-card .ulama-book {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(26,95,110,0.2);
+    border: 1px solid rgba(26,95,110,0.4);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: #7dd3e8;
+    margin-bottom: 12px;
+  }
+
+  .ulama-card .ulama-info {
+    font-size: 13px;
+    color: rgba(249,244,232,0.6);
+    line-height: 1.7;
+  }
+
+  .ulama-card .ulama-keahlian {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .keahlian-tag {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 11px;
+    color: rgba(201,168,76,0.9);
+  }
+
+  /* EXAMPLE HADIS BOX */
+  .hadis-example {
+    background: rgba(26,95,110,0.1);
+    border: 1px solid rgba(26,95,110,0.3);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 12px 0;
+  }
+
+  .hadis-example .hadis-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #7dd3e8;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .hadis-example .hadis-arabic {
+    font-family: 'Scheherazade New', serif;
+    font-size: 20px;
+    color: var(--cream);
+    direction: rtl;
+    line-height: 1.9;
+    margin-bottom: 10px;
+  }
+
+  .hadis-example .hadis-terjemah {
+    font-size: 13px;
+    color: rgba(249,244,232,0.65);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  @media (max-width: 900px) {
+    #sidebar { transform: translateX(-100%); }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; }
+    #menu-toggle { display: flex; }
+    .home-grid { grid-template-columns: repeat(2, 1fr); }
+    .grid2 { grid-template-columns: 1fr; }
+    .grid3 { grid-template-columns: 1fr; }
+    .content-page { padding: 60px 24px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Menu Toggle Mobile -->
+<button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="arabic-title">علوم الحديث</div>
+    <h2>Kisi-Kisi Ulumul Hadis</h2>
+  </div>
+  <ul class="nav-list">
+    <li><a href="#" class="active" onclick="showPage('home',this)"><span class="num">🏠</span> Beranda</a></li>
+    <li><a href="#" onclick="showPage('p1',this)"><span class="num">1</span> Pengertian Sunnah, Hadis & Khabar</a></li>
+    <li><a href="#" onclick="showPage('p2',this)"><span class="num">2</span> Ciri-Ciri Hadis Qudsi</a></li>
+    <li><a href="#" onclick="showPage('p3',this)"><span class="num">3</span> Perbedaan Hadis dan Khabar</a></li>
+    <li><a href="#" onclick="showPage('p4',this)"><span class="num">4</span> Gelar Perawi Hadis</a></li>
+    <li><a href="#" onclick="showPage('p5',this)"><span class="num">5</span> Contoh Matan, Sanad & Rawi</a></li>
+    <li><a href="#" onclick="showPage('p6',this)"><span class="num">6</span> Jenis-Jenis Sunnah</a></li>
+    <li><a href="#" onclick="showPage('p7',this)"><span class="num">7</span> Pengertian Matan, Sanad & Rawi</a></li>
+    <li><a href="#" onclick="showPage('p8',this)"><span class="num">8</span> Gelar Perawi (Lanjutan)</a></li>
+    <li><a href="#" onclick="showPage('p9',this)"><span class="num">9</span> Fungsi Hadis Terhadap Al-Qur'an</a></li>
+    <li><a href="#" onclick="showPage('p10',this)"><span class="num">10</span> Syarat Perawi</a></li>
+    <li><a href="#" onclick="showPage('p11',this)"><span class="num">11</span> Bayan Taqrir, Tafsir & Tasyri'</a></li>
+    <li><a href="#" onclick="showPage('p12',this)"><span class="num">12</span> Contoh Fungsi Hadis</a></li>
+    <li><a href="#" onclick="showPage('p13',this)"><span class="num">13</span> Hadis Shahih, Hasan & Dha'if</a></li>
+    <li><a href="#" onclick="showPage('p14',this)"><span class="num">14</span> Hadis Mutawatir & Ahad</a></li>
+    <li><a href="#" onclick="showPage('p15',this)"><span class="num">15</span> Keahlian Ulama Kutubus Sittah</a></li>
+    <li><a href="#" onclick="showPage('p16',this)"><span class="num">16</span> Riwayat Hidup Ulama Kutubus Sittah</a></li>
+  </ul>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- HOME -->
+<div id="home" class="content-page active" style="display:block; max-width:100%; padding:60px 40px;">
+  <div class="home-page">
+    <div class="home-arabic">علوم الحديث</div>
+    <h1 class="home-title">Kisi-Kisi <span>Ulumul Hadis</span></h1>
+    <p class="home-subtitle">Materi Lengkap · 16 Topik Pembelajaran</p>
+    <div class="home-grid">
+      <div class="home-card" onclick="showPage('p1',null)">
+        <div class="card-num">MATERI 1</div>
+        <div class="card-title">Pengertian Sunnah, Hadis & Khabar</div>
+      </div>
+      <div class="home-card" onclick="showPage('p2',null)">
+        <div class="card-num">MATERI 2</div>
+        <div class="card-title">Ciri-Ciri Hadis Qudsi</div>
+      </div>
+      <div class="home-card" onclick="showPage('p3',null)">
+        <div class="card-num">MATERI 3</div>
+        <div class="card-title">Perbedaan Hadis & Khabar</div>
+      </div>
+      <div class="home-card" onclick="showPage('p4',null)">
+        <div class="card-num">MATERI 4</div>
+        <div class="card-title">Gelar Perawi Hadis</div>
+      </div>
+      <div class="home-card" onclick="showPage('p5',null)">
+        <div class="card-num">MATERI 5</div>
+        <div class="card-title">Contoh Matan, Sanad & Rawi</div>
+      </div>
+      <div class="home-card" onclick="showPage('p6',null)">
+        <div class="card-num">MATERI 6</div>
+        <div class="card-title">Jenis-Jenis Sunnah</div>
+      </div>
+      <div class="home-card" onclick="showPage('p7',null)">
+        <div class="card-num">MATERI 7</div>
+        <div class="card-title">Pengertian Matan, Sanad & Rawi</div>
+      </div>
+      <div class="home-card" onclick="showPage('p8',null)">
+        <div class="card-num">MATERI 8</div>
+        <div class="card-title">Gelar Perawi (Detail)</div>
+      </div>
+      <div class="home-card" onclick="showPage('p9',null)">
+        <div class="card-num">MATERI 9</div>
+        <div class="card-title">Fungsi Hadis Terhadap Al-Qur'an</div>
+      </div>
+      <div class="home-card" onclick="showPage('p10',null)">
+        <div class="card-num">MATERI 10</div>
+        <div class="card-title">Syarat Perawi Hadis</div>
+      </div>
+      <div class="home-card" onclick="showPage('p11',null)">
+        <div class="card-num">MATERI 11</div>
+        <div class="card-title">Bayan Taqrir, Tafsir & Tasyri'</div>
+      </div>
+      <div class="home-card" onclick="showPage('p12',null)">
+        <div class="card-num">MATERI 12</div>
+        <div class="card-title">Contoh Fungsi Hadis</div>
+      </div>
+      <div class="home-card" onclick="showPage('p13',null)">
+        <div class="card-num">MATERI 13</div>
+        <div class="card-title">Hadis Shahih, Hasan & Dha'if</div>
+      </div>
+      <div class="home-card" onclick="showPage('p14',null)">
+        <div class="card-num">MATERI 14</div>
+        <div class="card-title">Hadis Mutawatir & Ahad</div>
+      </div>
+      <div class="home-card" onclick="showPage('p15',null)">
+        <div class="card-num">MATERI 15</div>
+        <div class="card-title">Keahlian Ulama Kutubus Sittah</div>
+      </div>
+      <div class="home-card" onclick="showPage('p16',null)">
+        <div class="card-num">MATERI 16</div>
+        <div class="card-title">Riwayat Hidup Ulama Kutubus Sittah</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 1 -->
+<div id="p1" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 1</div>
+    <h1 class="page-title">Pengertian <span>Sunnah, Hadis & Khabar</span></h1>
+    <p class="page-desc">Memahami tiga istilah pokok dalam ilmu hadis beserta perbedaan dan penggunaannya dalam tradisi keilmuan Islam.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">A. Pengertian Hadis (الحديث)</div>
+    <div class="arabic-box">
+      <div class="arabic-text">اَلْحَدِيْثُ هُوَ مَا أُضِيْفَ إِلَى النَّبِيِّ ﷺ مِنْ قَوْلٍ أَوْ فِعْلٍ أَوْ تَقْرِيْرٍ أَوْ صِفَةٍ</div>
+      <div class="arabic-label">Definisi Hadis secara Istilah</div>
+    </div>
+    <div class="card">
+      <p>Secara bahasa, <strong>Hadis</strong> (الحديث) berarti <em>baru</em> atau <em>berita/kabar</em>. Secara istilah dalam ilmu hadis, hadis adalah segala sesuatu yang disandarkan kepada Nabi Muhammad ﷺ, baik berupa:</p>
+      <ul>
+        <li><strong>Perkataan (Qauliyah)</strong> — ucapan Nabi dalam berbagai kesempatan</li>
+        <li><strong>Perbuatan (Fi'liyah)</strong> — tindakan dan perilaku Nabi sehari-hari</li>
+        <li><strong>Ketetapan (Taqririyah)</strong> — diam atau persetujuan Nabi atas perbuatan sahabat</li>
+        <li><strong>Sifat (Washfiyah)</strong> — sifat jasmani dan akhlak Nabi ﷺ</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">B. Pengertian Sunnah (السنة)</div>
+    <div class="arabic-box">
+      <div class="arabic-text">السُّنَّةُ لُغَةً: الطَّرِيْقَةُ وَالسِّيْرَةُ، اِصْطِلَاحًا: مَا صَدَرَ عَنِ النَّبِيِّ ﷺ مِنْ قَوْلٍ أَوْ فِعْلٍ أَوْ تَقْرِيْرٍ</div>
+      <div class="arabic-label">Definisi Sunnah</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h4><span class="icon">📖</span> Menurut Ahli Hadis</h4>
+        <p>Sunnah adalah segala yang diriwayatkan dari Nabi ﷺ berupa perkataan, perbuatan, ketetapan, sifat fisik, dan akhlak beliau, baik sebelum maupun sesudah diangkat menjadi nabi.</p>
+      </div>
+      <div class="card">
+        <h4><span class="icon">⚖️</span> Menurut Ahli Ushul Fiqih</h4>
+        <p>Sunnah adalah segala yang datang dari Nabi ﷺ selain Al-Qur'an, baik berupa perkataan, perbuatan, maupun ketetapan yang dapat dijadikan dalil hukum syar'i.</p>
+      </div>
+    </div>
+    <div class="def-box">
+      <p>✦ Perbedaan utama: Ahli hadis mencakup sifat fisik dan akhlak dalam pengertian Sunnah, sedangkan ahli Ushul Fiqih lebih fokus pada Sunnah sebagai sumber hukum.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">C. Pengertian Khabar (الخبر)</div>
+    <div class="grid2">
+      <div class="card">
+        <h4><span class="icon">📰</span> Pengertian Sempit</h4>
+        <p>Sebagian ulama mendefinisikan Khabar sebagai berita yang datang dari <strong>selain Nabi ﷺ</strong>, yakni dari para sahabat, tabi'in, atau ulama. Ini berbeda dengan hadis yang khusus dari Nabi.</p>
+      </div>
+      <div class="card">
+        <h4><span class="icon">🔄</span> Pengertian Luas</h4>
+        <p>Ulama lain menyamakan Khabar dengan Hadis, artinya segala berita yang disandarkan kepada Nabi ﷺ. Dalam pengertian ini, Khabar dan Hadis bisa saling menggantikan.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">D. Pengertian Hadis Qudsi (الحديث القدسي)</div>
+    <div class="arabic-box">
+      <div class="arabic-text">الحديث القدسي: مَا رَوَاهُ النَّبِيُّ ﷺ عَنْ رَبِّهِ عَزَّ وَجَلَّ</div>
+      <div class="arabic-label">Definisi Hadis Qudsi</div>
+    </div>
+    <div class="card">
+      <p>Hadis Qudsi adalah hadis yang Nabi ﷺ riwayatkan langsung dari Allah ﷻ. Maknanya dari Allah, sedangkan redaksinya (lafaznya) dari Nabi ﷺ sendiri. Contoh: "Allah berfirman: Aku adalah sebagaimana prasangka hamba-Ku kepada-Ku..."</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspek</th><th>Al-Qur'an</th><th>Hadis Qudsi</th><th>Hadis Nabawi</th></tr></thead>
+        <tbody>
+          <tr><td>Sumber Makna</td><td>Allah ﷻ</td><td>Allah ﷻ</td><td>Nabi ﷺ</td></tr>
+          <tr><td>Sumber Lafaz</td><td>Allah ﷻ</td><td>Nabi ﷺ</td><td>Nabi ﷺ</td></tr>
+          <tr><td>Kemukjizatan</td><td>✅ Mukjizat</td><td>❌ Bukan mukjizat</td><td>❌ Bukan mukjizat</td></tr>
+          <tr><td>Boleh dibaca dalam shalat</td><td>✅ Ya</td><td>❌ Tidak</td><td>❌ Tidak</td></tr>
+          <tr><td>Haram disentuh tanpa wudhu</td><td>✅ Ya</td><td>❌ Tidak</td><td>❌ Tidak</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('home',null)">← Beranda</button>
+    <button class="nav-btn primary" onclick="showPage('p2',null)">Materi 2: Ciri Hadis Qudsi →</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="p2" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 2</div>
+    <h1 class="page-title">Ciri-Ciri <span>Hadis Qudsi</span></h1>
+    <p class="page-desc">Karakteristik khusus yang membedakan hadis qudsi dari jenis hadis lainnya.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Ciri-Ciri Utama Hadis Qudsi</div>
+    <div class="card">
+      <h4><span class="icon">1️⃣</span> Disandarkan kepada Allah ﷻ</h4>
+      <p>Hadis qudsi selalu diawali dengan ungkapan Nabi yang menyebutkan Allah sebagai pembicara, seperti: <strong>"Allah berfirman" (قَالَ اللَّهُ)</strong> atau <strong>"Allah Yang Maha Suci berfirman"</strong>. Ini adalah ciri paling khas.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">2️⃣</span> Maknanya dari Allah, Lafaznya dari Nabi ﷺ</h4>
+      <p>Berbeda dengan Al-Qur'an yang lafaz dan maknanya dari Allah, hadis qudsi hanya maknanya dari Allah, sedangkan redaksi/kalimatnya disampaikan oleh Nabi ﷺ dengan bahasanya sendiri.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">3️⃣</span> Tidak Termasuk Al-Qur'an</h4>
+      <p>Meski maknanya bersumber dari Allah, hadis qudsi bukan bagian dari Al-Qur'an. Maka hadis qudsi <strong>tidak bisa dijadikan bacaan shalat</strong>, tidak memiliki kemukjizatan lafaz, dan tidak haram disentuh tanpa wudhu.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">4️⃣</span> Cara Penyampaiannya</h4>
+      <p>Wahyu dalam hadis qudsi disampaikan melalui ilham atau mimpi, bukan melalui wahyu Al-Qur'an yang penuh perhatian dan penjagaan. Para ulama berbeda pendapat tentang mekanisme penerimaan wahyu jenis ini.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">5️⃣</span> Jumlahnya Terbatas</h4>
+      <p>Para ulama menghimpun hadis qudsi dalam kitab-kitab khusus. Jumlahnya jauh lebih sedikit dibandingkan hadis nabawi biasa, berkisar antara <strong>100 hingga 200 hadis</strong> menurut berbagai perhitungan ulama.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">6️⃣</span> Cara Meriwayatkannya</h4>
+      <p>Boleh diriwayatkan secara makna (bil-ma'na), tidak harus dengan lafaz yang persis sama. Sedangkan Al-Qur'an wajib dipertahankan lafaznya kata per kata.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Contoh Hadis Qudsi</div>
+    <div class="hadis-example">
+      <div class="hadis-label">📖 Contoh Hadis Qudsi</div>
+      <div class="hadis-arabic">قَالَ اللَّهُ تَعَالَى: أَنَا عِنْدَ ظَنِّ عَبْدِي بِي، وَأَنَا مَعَهُ إِذَا ذَكَرَنِي</div>
+      <div class="hadis-terjemah">"Allah berfirman: Aku adalah sebagaimana prasangka hamba-Ku kepada-Ku, dan Aku bersamanya ketika ia mengingat-Ku." (HR. Bukhari & Muslim)</div>
+    </div>
+    <div class="hadis-example">
+      <div class="hadis-label">📖 Contoh Hadis Qudsi</div>
+      <div class="hadis-arabic">يَا ابْنَ آدَمَ، إِنَّكَ مَا دَعَوْتَنِي وَرَجَوْتَنِي غَفَرْتُ لَكَ عَلَى مَا كَانَ فِيكَ وَلَا أُبَالِي</div>
+      <div class="hadis-terjemah">"Wahai anak Adam, selama kamu berdoa kepada-Ku dan berharap kepada-Ku, maka Aku ampuni dosa-dosamu dan Aku tidak peduli (sebesar apapun dosamu)." (HR. Tirmidzi)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Perbandingan Ringkas</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ciri</th><th>Al-Qur'an</th><th>Hadis Qudsi</th></tr></thead>
+        <tbody>
+          <tr><td>Sumber lafaz</td><td>Allah ﷻ (langsung)</td><td>Nabi ﷺ</td></tr>
+          <tr><td>Sumber makna</td><td>Allah ﷻ</td><td>Allah ﷻ</td></tr>
+          <tr><td>Kemukjizatan</td><td><span class="pill pill-green">Ada</span></td><td><span class="pill pill-red">Tidak ada</span></td></tr>
+          <tr><td>Boleh diriwayatkan bil-ma'na</td><td><span class="pill pill-red">Tidak boleh</span></td><td><span class="pill pill-green">Boleh</span></td></tr>
+          <tr><td>Dibaca dalam shalat</td><td><span class="pill pill-green">Ya (wajib)</span></td><td><span class="pill pill-red">Tidak</span></td></tr>
+          <tr><td>Harus berwudhu saat memegang</td><td><span class="pill pill-green">Ya</span></td><td><span class="pill pill-red">Tidak</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p1',null)">← Materi 1</button>
+    <button class="nav-btn primary" onclick="showPage('p3',null)">Materi 3: Perbedaan Hadis & Khabar →</button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div id="p3" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 3</div>
+    <h1 class="page-title">Perbedaan <span>Hadis dan Khabar</span></h1>
+    <p class="page-desc">Memahami perbedaan terminologi antara Hadis dan Khabar menurut berbagai pandangan ulama.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Pendapat Ulama tentang Perbedaan Hadis dan Khabar</div>
+    <div class="card">
+      <h4><span class="icon">①</span> Pendapat Pertama: Hadis dan Khabar Sinonim</h4>
+      <p>Mayoritas ulama berpendapat bahwa Hadis dan Khabar memiliki makna yang sama dan dapat saling digunakan. Keduanya merujuk pada segala sesuatu yang datang dari Nabi ﷺ. Ini adalah pendapat yang paling banyak dipegang.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">②</span> Pendapat Kedua: Khabar Lebih Luas</h4>
+      <p>Sebagian ulama berpendapat bahwa <strong>Khabar lebih luas</strong> dari Hadis. Khabar mencakup segala berita, baik dari Nabi ﷺ, sahabat, tabi'in, maupun orang lain. Sedangkan <strong>Hadis khusus untuk Nabi ﷺ</strong>.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">③</span> Pendapat Ketiga: Hadis dan Khabar Berbeda Objek</h4>
+      <p>Ada juga yang membedakan: <strong>Hadis</strong> adalah yang datang dari Nabi ﷺ saja, sedangkan <strong>Khabar</strong> adalah berita yang datang dari selain Nabi, yaitu dari sahabat dan tabi'in. Pendapat ini yang menjadikan "Ilmu Khabar" sebagai cabang tersendiri.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Tabel Perbandingan</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspek</th><th>Hadis</th><th>Khabar</th></tr></thead>
+        <tbody>
+          <tr><td>Asal kata</td><td>حَدَثَ (baru/berita)</td><td>خَبَرَ (kabar/informasi)</td></tr>
+          <tr><td>Sumber (pendapat sempit)</td><td>Nabi ﷺ saja</td><td>Selain Nabi (sahabat, tabi'in)</td></tr>
+          <tr><td>Sumber (pendapat luas)</td><td>Nabi ﷺ</td><td>Nabi + selain Nabi</td></tr>
+          <tr><td>Penggunaan dalam kitab</td><td>Lebih umum digunakan</td><td>Kadang dipakai untuk berita sejarah</td></tr>
+          <tr><td>Kesimpulan ulama</td><td colspan="2" style="text-align:center; color: var(--gold-light);">Mayoritas ulama menyamakan keduanya</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Istilah Terkait: Atsar (الأثر)</div>
+    <div class="card">
+      <h4><span class="icon">📜</span> Pengertian Atsar</h4>
+      <p>Selain Hadis dan Khabar, dikenal juga istilah <strong>Atsar</strong> yang secara bahasa berarti <em>bekas/jejak</em>. Secara istilah:</p>
+      <ul>
+        <li>Menurut mayoritas ulama: Atsar adalah segala yang datang dari <strong>sahabat dan tabi'in</strong>, bukan dari Nabi ﷺ</li>
+        <li>Menurut sebagian ulama Khurasan: Atsar bisa juga digunakan untuk riwayat dari Nabi ﷺ</li>
+        <li>Atsar sering disebut juga sebagai hadis <em>mauquf</em> (terhenti pada sahabat) atau <em>maqthu'</em> (terhenti pada tabi'in)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p2',null)">← Materi 2</button>
+    <button class="nav-btn primary" onclick="showPage('p4',null)">Materi 4: Gelar Perawi →</button>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div id="p4" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 4</div>
+    <h1 class="page-title">Gelar <span>Perawi Hadis</span></h1>
+    <p class="page-desc">Berbagai gelar kehormatan yang diberikan kepada para perawi dan ulama hadis berdasarkan kapasitas hafalan dan keahlian mereka.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Tingkatan Gelar Perawi dari Tertinggi ke Terendah</div>
+
+    <div class="card">
+      <h4><span class="icon">👑</span> 1. Hakim (الحاكم)</h4>
+      <p>Gelar tertinggi. Diberikan kepada ulama yang menguasai seluruh hadis yang ada, mengetahui seluruh sanad dan matannya. Ia menjadi "hakim" atas hadis—mampu memutuskan shahih atau tidaknya suatu hadis dengan sangat mendalam.</p>
+      <p style="margin-top:8px; color: var(--gold-light);">✦ Contoh: Al-Hakim al-Naisaburi, penulis kitab <em>Al-Mustadrak</em></p>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">🏆</span> 2. Hujjah (الحجة)</h4>
+      <p>Ulama yang hafal <strong>300.000 hadis</strong> beserta sanad dan matannya. Disebut Hujjah karena ucapannya bisa dijadikan argumen/bukti dalam ilmu hadis.</p>
+      <p style="margin-top:8px; color: var(--gold-light);">✦ Contoh: Imam Ahmad bin Hanbal</p>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">🎖️</span> 3. Hafizh (الحافظ)</div>
+      <p>Ulama yang hafal <strong>100.000 hadis</strong> beserta sanad dan matannya. Gelar ini sangat bergengsi dan banyak disandang oleh imam-imam besar hadis.</p>
+      <p style="margin-top:8px; color: var(--gold-light);">✦ Contoh: Imam Bukhari, Imam Muslim, Imam Tirmidzi</p>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">⭐</span> 4. Muhaddits (المحدث)</h4>
+      <p>Ulama yang menguasai ilmu hadis secara mendalam: mengetahui banyak hadis, sanad-sanadnya, rawi-rawinya, dan dapat membedakan hadis shahih dari yang lemah. Istilah ini sering digunakan secara umum untuk para ahli hadis.</p>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">📚</span> 5. Musnid (المسند)</h4>
+      <p>Ulama yang meriwayatkan hadis dengan menyebutkan sanadnya secara lengkap, namun belum tentu memiliki keahlian mendalam dalam menilai kualitas rawi atau hadis. Fokusnya pada periwayatan, bukan analisis.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Ringkasan Tingkatan Gelar</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>No</th><th>Gelar</th><th>Kapasitas Hafalan</th><th>Keterangan</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Hakim</strong></td><td>Menguasai semua hadis</td><td><span class="pill pill-green">Tertinggi</span></td></tr>
+          <tr><td>2</td><td><strong>Hujjah</strong></td><td>300.000 hadis + sanad</td><td><span class="pill pill-yellow">Sangat Tinggi</span></td></tr>
+          <tr><td>3</td><td><strong>Hafizh</strong></td><td>100.000 hadis + sanad</td><td><span class="pill pill-yellow">Tinggi</span></td></tr>
+          <tr><td>4</td><td><strong>Muhaddits</strong></td><td>Ahli hadis & analisis</td><td><span class="pill pill-blue">Umum</span></td></tr>
+          <tr><td>5</td><td><strong>Musnid</strong></td><td>Perawi dengan sanad</td><td><span class="pill pill-blue">Dasar</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p3',null)">← Materi 3</button>
+    <button class="nav-btn primary" onclick="showPage('p5',null)">Materi 5: Contoh Matan, Sanad & Rawi →</button>
+  </div>
+</div>
+
+<!-- PAGE 5 -->
+<div id="p5" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 5</div>
+    <h1 class="page-title">Contoh <span>Matan, Sanad & Rawi</span></h1>
+    <p class="page-desc">Contoh konkret sebuah hadis lengkap dengan identifikasi bagian matan, sanad, dan rawi-rawinya.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Contoh Hadis Lengkap</div>
+    <div class="hadis-example">
+      <div class="hadis-label">📖 Hadis tentang Niat</div>
+      <div class="hadis-arabic">حَدَّثَنَا الْحُمَيْدِيُّ عَبْدُ اللَّهِ بْنُ الزُّبَيْرِ قَالَ: حَدَّثَنَا سُفْيَانُ قَالَ: حَدَّثَنَا يَحْيَى بْنُ سَعِيدٍ الْأَنْصَارِيُّ قَالَ: أَخْبَرَنِي مُحَمَّدُ بْنُ إِبْرَاهِيمَ التَّيْمِيُّ أَنَّهُ سَمِعَ عَلْقَمَةَ بْنَ وَقَّاصٍ اللَّيْثِيَّ يَقُولُ: سَمِعْتُ عُمَرَ بْنَ الْخَطَّابِ رَضِيَ اللَّهُ عَنْهُ عَلَى الْمِنْبَرِ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ</div>
+      <div class="hadis-terjemah">"Sesungguhnya segala amal perbuatan tergantung pada niatnya..." (HR. Bukhari, Hadis No. 1)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Identifikasi Bagian-Bagian Hadis</div>
+
+    <div class="card">
+      <h4><span class="icon">📝</span> MATAN — Isi/Teks Hadis</h4>
+      <div class="arabic-box" style="margin-top:12px;">
+        <div class="arabic-text">إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى</div>
+        <div class="arabic-label">Ini adalah MATAN hadis — bagian isi dari ucapan Nabi ﷺ</div>
+      </div>
+      <p>Matan adalah <strong>isi pokok</strong> hadis, yaitu perkataan, perbuatan, atau ketetapan Nabi yang menjadi tujuan utama hadis tersebut. Matan ini mengandung hukum atau ajaran Islam.</p>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">🔗</span> SANAD — Rantai Periwayatan</h4>
+      <p>Sanad adalah rangkaian para perawi yang menghubungkan dari pengumpul hadis hingga Nabi ﷺ. Dalam contoh di atas, sanadnya adalah:</p>
+      <ul>
+        <li><span class="highlight-num">1</span> <strong>Imam Bukhari</strong> (pengumpul/pencatat hadis)</li>
+        <li><span class="highlight-num">2</span> <strong>Al-Humaidi Abdullah bin Zubair</strong></li>
+        <li><span class="highlight-num">3</span> <strong>Sufyan (bin Uyainah)</strong></li>
+        <li><span class="highlight-num">4</span> <strong>Yahya bin Sa'id Al-Anshari</strong></li>
+        <li><span class="highlight-num">5</span> <strong>Muhammad bin Ibrahim At-Taimi</strong></li>
+        <li><span class="highlight-num">6</span> <strong>Alqamah bin Waqqash Al-Laitsi</strong></li>
+        <li><span class="highlight-num">7</span> <strong>Umar bin Khattab ra.</strong> (sahabat Nabi)</li>
+        <li><span class="highlight-num">N</span> <strong>Nabi Muhammad ﷺ</strong> (sumber hadis)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">👤</span> RAWI — Para Periwayat</h4>
+      <p>Rawi adalah setiap individu dalam rantai sanad. Setiap orang yang disebutkan dalam sanad adalah seorang rawi. Jadi dalam hadis di atas, terdapat <strong>7 rawi</strong> yang membentuk sanad dari Imam Bukhari hingga Sahabat Umar ra.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Diagram Alur Periwayatan</div>
+    <div class="card" style="text-align:center;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px 0;">
+        <div style="background:rgba(201,168,76,0.15); border:1px solid var(--gold); border-radius:8px; padding:10px 24px; font-weight:700; color:var(--gold);">Nabi Muhammad ﷺ</div>
+        <div style="color:rgba(201,168,76,0.4); font-size:20px;">↓</div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 20px; font-size:13px;">Umar bin Khattab ra. (Sahabat)</div>
+        <div style="color:rgba(201,168,76,0.4); font-size:20px;">↓</div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 20px; font-size:13px;">Alqamah bin Waqqash (Tabi'in)</div>
+        <div style="color:rgba(201,168,76,0.4); font-size:20px;">↓</div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 20px; font-size:13px;">Muhammad bin Ibrahim</div>
+        <div style="color:rgba(201,168,76,0.4); font-size:20px;">↓</div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 20px; font-size:13px;">Yahya bin Sa'id</div>
+        <div style="color:rgba(201,168,76,0.4); font-size:20px;">↓</div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 20px; font-size:13px;">Sufyan bin Uyainah</div>
+        <div style="color:rgba(201,168,76,0.4); font-size:20px;">↓</div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 20px; font-size:13px;">Al-Humaidi</div>
+        <div style="color:rgba(201,168,76,0.4); font-size:20px;">↓</div>
+        <div style="background:rgba(26,95,110,0.2); border:1px solid var(--teal-light); border-radius:8px; padding:10px 24px; font-weight:700; color:#7dd3e8;">Imam Bukhari (Perawi Akhir/Pencatat)</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p4',null)">← Materi 4</button>
+    <button class="nav-btn primary" onclick="showPage('p6',null)">Materi 6: Jenis-Jenis Sunnah →</button>
+  </div>
+</div>
+
+<!-- PAGE 6 -->
+<div id="p6" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 6</div>
+    <h1 class="page-title">Jenis-Jenis <span>Sunnah</span></h1>
+    <p class="page-desc">Klasifikasi sunnah Nabi ﷺ berdasarkan bentuk penyampaiannya: Fi'liyah, Qauliyah, Hammiyah, dan Taqririyah.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Empat Jenis Sunnah Nabi ﷺ</div>
+
+    <div class="card">
+      <h4><span class="icon">🗣️</span> 1. Sunnah Qauliyah (السنة القولية)</h4>
+      <p><strong>Definisi:</strong> Semua perkataan, ucapan, dan sabda Nabi Muhammad ﷺ yang disampaikan dalam berbagai situasi dan kondisi.</p>
+      <div class="def-box" style="margin-top:12px;">
+        <p>✦ Ini adalah jenis sunnah yang paling banyak tercatat dalam kitab-kitab hadis karena mudah dihafal dan disampaikan secara lisan.</p>
+      </div>
+      <p style="margin-top:10px;"><strong>Contoh:</strong></p>
+      <div class="hadis-example" style="margin-top:8px;">
+        <div class="hadis-arabic">إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ</div>
+        <div class="hadis-terjemah">"Sesungguhnya setiap amal tergantung pada niatnya." (HR. Bukhari-Muslim)</div>
+      </div>
+      <div class="hadis-example">
+        <div class="hadis-arabic">مَنْ غَشَّنَا فَلَيْسَ مِنَّا</div>
+        <div class="hadis-terjemah">"Barangsiapa menipu kami, maka ia bukan golongan kami." (HR. Muslim)</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">🤲</span> 2. Sunnah Fi'liyah (السنة الفعلية)</h4>
+      <p><strong>Definisi:</strong> Segala perbuatan dan tindakan yang dilakukan oleh Nabi Muhammad ﷺ, yang kemudian disaksikan dan diriwayatkan oleh para sahabat.</p>
+      <div class="def-box" style="margin-top:12px;">
+        <p>✦ Sunnah fi'liyah menjadi pedoman bagi umat Islam dalam ibadah dan kehidupan sehari-hari karena Nabi ﷺ adalah contoh nyata (uswah hasanah).</p>
+      </div>
+      <p style="margin-top:10px;"><strong>Contoh-contoh:</strong></p>
+      <ul>
+        <li>Cara Nabi ﷺ melakukan shalat (gerakan, bacaan, tata caranya)</li>
+        <li>Cara Nabi ﷺ berwudhu (urutan membasuh anggota tubuh)</li>
+        <li>Cara Nabi ﷺ berhaji dan melakukan manasik</li>
+        <li>Cara Nabi ﷺ makan dan minum</li>
+        <li>Cara Nabi ﷺ tidur (berbaring ke sisi kanan)</li>
+      </ul>
+      <div class="hadis-example" style="margin-top:12px;">
+        <div class="hadis-terjemah">"Shalatlah kalian sebagaimana kalian melihat aku shalat." (HR. Bukhari) — Ini menunjukkan bahwa perbuatan Nabi dalam shalat adalah sunnah yang wajib diikuti.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">💭</span> 3. Sunnah Hammiyah / Himmiyah (السنة الهمية)</h4>
+      <p><strong>Definisi:</strong> Sesuatu yang direncanakan atau diniatkan oleh Nabi ﷺ untuk dilakukan, namun belum sempat beliau laksanakan sebelum wafat. Disebut juga <em>sunnah tarkiyah</em> oleh sebagian ulama.</p>
+      <div class="def-box" style="margin-top:12px;">
+        <p>✦ Para ulama berbeda pendapat tentang kehujjahan sunnah hammiyah. Sebagian menganggapnya tetap bisa menjadi dalil anjuran, karena menunjukkan kecenderungan Nabi ﷺ.</p>
+      </div>
+      <p style="margin-top:10px;"><strong>Contoh:</strong></p>
+      <ul>
+        <li>Nabi ﷺ berniat akan berpuasa pada tanggal 9 Muharram ('Asyura) untuk membedakannya dengan puasa Yahudi, namun beliau wafat sebelum tahun berikutnya</li>
+        <li>Rencana Nabi ﷺ menulis pedoman hukum tertulis yang tersirat dalam percakapan beliau</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">✅</span> 4. Sunnah Taqririyah (السنة التقريرية)</h4>
+      <p><strong>Definisi:</strong> Persetujuan diam atau pembiaran Nabi ﷺ terhadap perbuatan atau ucapan sahabat. Artinya Nabi melihat atau mengetahui suatu perbuatan namun tidak melarangnya — ini dianggap sebagai persetujuan.</p>
+      <div class="def-box" style="margin-top:12px;">
+        <p>✦ Diam Nabi ﷺ atas suatu perbuatan adalah tanda bahwa perbuatan tersebut dibolehkan atau dianjurkan, karena Nabi tidak akan membiarkan kemungkaran tanpa ditegur.</p>
+      </div>
+      <p style="margin-top:10px;"><strong>Contoh:</strong></p>
+      <ul>
+        <li>Nabi ﷺ membiarkan para sahabat bermain tombak di dalam masjid pada hari raya</li>
+        <li>Nabi ﷺ mendiamkan sahabat yang berijtihad tentang shalat di perjalanan (tayamum)</li>
+        <li>Nabi ﷺ membiarkan Bilal ra. shalat sunnah setelah adzan, karena Nabi mendengar suara sandalnya di surga</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Tabel Ringkasan Jenis Sunnah</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Jenis</th><th>Bentuk</th><th>Contoh</th><th>Kehujjahan</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Qauliyah</strong></td><td>Perkataan/Sabda</td><td>Hadis tentang niat</td><td><span class="pill pill-green">Kuat</span></td></tr>
+          <tr><td><strong>Fi'liyah</strong></td><td>Perbuatan</td><td>Cara shalat, wudhu</td><td><span class="pill pill-green">Kuat</span></td></tr>
+          <tr><td><strong>Taqririyah</strong></td><td>Persetujuan diam</td><td>Nabi diam melihat sahabat bermain tombak</td><td><span class="pill pill-green">Kuat</span></td></tr>
+          <tr><td><strong>Hammiyah</strong></td><td>Niat/Rencana</td><td>Rencana puasa 9 Muharram</td><td><span class="pill pill-yellow">Diperdebatkan</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p5',null)">← Materi 5</button>
+    <button class="nav-btn primary" onclick="showPage('p7',null)">Materi 7: Pengertian Matan, Sanad & Rawi →</button>
+  </div>
+</div>
+
+<!-- PAGE 7 -->
+<div id="p7" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 7</div>
+    <h1 class="page-title">Pengertian <span>Matan, Sanad & Rawi</span></h1>
+    <p class="page-desc">Penjelasan mendalam tentang tiga komponen utama dalam struktur sebuah hadis.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Komponen Utama Sebuah Hadis</div>
+    <div class="card">
+      <h4><span class="icon">📋</span> 1. MATAN (المتن)</h4>
+      <div class="arabic-box" style="margin-top:10px;">
+        <div class="arabic-text" style="font-size:18px;">المتن: ما ينتهي إليه السند من الكلام</div>
+        <div class="arabic-label">Definisi Matan</div>
+      </div>
+      <p><strong>Secara bahasa:</strong> Matan berasal dari kata <em>matana</em> yang berarti punggung jalan yang keras/kuat.</p>
+      <p style="margin-top:8px;"><strong>Secara istilah:</strong> Matan adalah <strong>isi/redaksi hadis</strong> itu sendiri — yaitu perkataan, perbuatan, atau ketetapan Nabi yang menjadi tujuan utama hadis dan terletak di akhir sanad.</p>
+      <p style="margin-top:8px;"><strong>Fungsi matan:</strong> Matan inilah yang mengandung hukum, ajaran, atau informasi yang ingin disampaikan. Ilmu yang mempelajari matan disebut <em>'Ilm Gharib al-Hadits</em> dan <em>Naqd al-Matan</em>.</p>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">🔗</span> 2. SANAD (السند)</h4>
+      <div class="arabic-box" style="margin-top:10px;">
+        <div class="arabic-text" style="font-size:18px;">السند: سلسلة الرجال الموصلة للمتن</div>
+        <div class="arabic-label">Definisi Sanad</div>
+      </div>
+      <p><strong>Secara bahasa:</strong> Sanad berasal dari kata <em>sanada</em> yang berarti sandaran/pegangan. Disebut sanad karena para perawi bersandar padanya dalam meriwayatkan hadis.</p>
+      <p style="margin-top:8px;"><strong>Secara istilah:</strong> Sanad adalah <strong>rangkaian para perawi</strong> yang menghubungkan mukharrij (pengumpul hadis) sampai kepada Nabi ﷺ. Sanad juga disebut <em>isnad</em>.</p>
+      <p style="margin-top:8px;"><strong>Pentingnya Sanad:</strong> Imam Abdullah bin Mubarak berkata: <em>"Isnad itu bagian dari agama; jika bukan karena isnad, maka orang akan mengatakan apa yang ia kehendaki."</em></p>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">👤</span> 3. RAWI (الراوي)</h4>
+      <div class="arabic-box" style="margin-top:10px;">
+        <div class="arabic-text" style="font-size:18px;">الراوي: من يروي الحديث وينقله</div>
+        <div class="arabic-label">Definisi Rawi</div>
+      </div>
+      <p><strong>Secara bahasa:</strong> Rawi berasal dari kata <em>rawa</em> yang berarti meriwayatkan atau menyampaikan berita.</p>
+      <p style="margin-top:8px;"><strong>Secara istilah:</strong> Rawi adalah <strong>setiap orang yang meriwayatkan hadis</strong> dan menjadi bagian dari rantai sanad. Setiap individu dalam sanad disebut rawi, mulai dari sahabat hingga pengumpul hadis.</p>
+      <p style="margin-top:8px;"><strong>Perbedaan Rawi dan Sanad:</strong> Rawi adalah <em>orangnya</em>, sedangkan sanad adalah <em>rantai/rangkaiannya</em>. Rawi-rawi yang tersusun secara berurutan membentuk sanad.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Ilustrasi Struktur Hadis</div>
+    <div class="card">
+      <div style="font-size:13px; color:rgba(249,244,232,0.6); margin-bottom:12px;">Setiap hadis terdiri dari dua bagian utama:</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div style="background:rgba(201,168,76,0.08); border:1px solid rgba(201,168,76,0.2); border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:20px; margin-bottom:8px;">🔗</div>
+          <div style="font-weight:700; color:var(--gold); margin-bottom:6px;">SANAD</div>
+          <div style="font-size:12px; color:rgba(249,244,232,0.6);">Rantai perawi — bukti keaslian dan ketersambungan riwayat</div>
+        </div>
+        <div style="background:rgba(26,95,110,0.12); border:1px solid rgba(26,95,110,0.3); border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:20px; margin-bottom:8px;">📝</div>
+          <div style="font-weight:700; color:#7dd3e8; margin-bottom:6px;">MATAN</div>
+          <div style="font-size:12px; color:rgba(249,244,232,0.6);">Isi hadis — tujuan utama yang mengandung ajaran/hukum</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p6',null)">← Materi 6</button>
+    <button class="nav-btn primary" onclick="showPage('p8',null)">Materi 8: Gelar Perawi Detail →</button>
+  </div>
+</div>
+
+<!-- PAGE 8 -->
+<div id="p8" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 8</div>
+    <h1 class="page-title">Gelar Perawi <span>(Detail Lengkap)</span></h1>
+    <p class="page-desc">Penjelasan lengkap berbagai gelar kehormatan bagi ulama hadis beserta kriteria dan contoh tokohnya.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Gelar Berdasarkan Cakupan Keilmuan</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Gelar (Arab)</th><th>Arti</th><th>Kapasitas</th><th>Tokoh</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>الحاكم</strong> <br><small>Al-Hakim</small></td>
+            <td>Yang memutuskan</td>
+            <td>Menguasai seluruh hadis, sanad, matan, dan para perawinya secara komprehensif</td>
+            <td>Al-Hakim an-Naisaburi</td>
+          </tr>
+          <tr>
+            <td><strong>الحجة</strong> <br><small>Al-Hujjah</small></td>
+            <td>Bukti/Argumen</td>
+            <td>Hafal 300.000 hadis beserta sanad, matan, dan jarh ta'dil</td>
+            <td>Imam Ahmad bin Hanbal</td>
+          </tr>
+          <tr>
+            <td><strong>الحافظ</strong> <br><small>Al-Hafizh</small></td>
+            <td>Yang menghafal</td>
+            <td>Hafal 100.000 hadis beserta sanad dan matannya</td>
+            <td>Imam Bukhari, Imam Muslim</td>
+          </tr>
+          <tr>
+            <td><strong>المحدث</strong> <br><small>Al-Muhaddits</small></td>
+            <td>Ahli hadis</td>
+            <td>Ahli di bidang hadis, mengenal banyak rawi dan dapat menilai kualitas hadis</td>
+            <td>Umumnya untuk semua imam hadis</td>
+          </tr>
+          <tr>
+            <td><strong>المسند</strong> <br><small>Al-Musnid</small></td>
+            <td>Penyambung sanad</td>
+            <td>Meriwayatkan hadis dengan sanad, belum tentu ahli analisis</td>
+            <td>Perawi yang banyak meriwayatkan</td>
+          </tr>
+          <tr>
+            <td><strong>المتقن</strong> <br><small>Al-Mutqin</small></td>
+            <td>Yang teliti</td>
+            <td>Perawi yang sangat teliti dan akurat dalam hafalan dan periwayatan</td>
+            <td>Perawi dengan sifat dhabith</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Istilah dalam Penilaian Perawi (Jarh wa Ta'dil)</div>
+    <div class="grid2">
+      <div class="card">
+        <h4><span class="icon">✅</span> Ta'dil (Pujian)</h4>
+        <p>Gelar-gelar pujian dari tertinggi ke terendah:</p>
+        <ul>
+          <li><strong>ثقة ثقة</strong> — sangat terpercaya</li>
+          <li><strong>ثقة</strong> — terpercaya</li>
+          <li><strong>صدوق</strong> — jujur</li>
+          <li><strong>مقبول</strong> — diterima</li>
+          <li><strong>لا بأس به</strong> — tidak masalah</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4><span class="icon">❌</span> Jarh (Celaan)</h4>
+        <p>Tingkatan celaan dari paling ringan:</p>
+        <ul>
+          <li><strong>لَيَّن</strong> — lemah sedikit</li>
+          <li><strong>ضعيف</strong> — lemah</li>
+          <li><strong>متروك</strong> — ditinggalkan</li>
+          <li><strong>كذاب</strong> — pendusta</li>
+          <li><strong>وضّاع</strong> — pembuat hadis palsu</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p7',null)">← Materi 7</button>
+    <button class="nav-btn primary" onclick="showPage('p9',null)">Materi 9: Fungsi Hadis →</button>
+  </div>
+</div>
+
+<!-- PAGE 9 -->
+<div id="p9" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 9</div>
+    <h1 class="page-title">Fungsi Hadis <span>Terhadap Al-Qur'an</span></h1>
+    <p class="page-desc">Peran dan kedudukan hadis sebagai sumber hukum Islam kedua dalam hubungannya dengan Al-Qur'an al-Karim.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Kedudukan Hadis sebagai Sumber Hukum</div>
+    <div class="def-box">
+      <p>Allah ﷻ berfirman: <strong>"Dan apa yang diberikan Rasul kepadamu, maka terimalah. Dan apa yang dilarangnya bagimu, maka tinggalkanlah."</strong> (QS. Al-Hasyr: 7) — Ini adalah dalil bahwa hadis wajib diikuti dan menjadi sumber hukum Islam.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Fungsi-Fungsi Utama Hadis terhadap Al-Qur'an</div>
+
+    <div class="card">
+      <h4><span class="icon">📌</span> 1. Bayan Taqrir / Ta'kid (بيان تقرير)</h4>
+      <p><strong>Definisi:</strong> Hadis berfungsi untuk <strong>memperkuat dan menegaskan</strong> hukum yang sudah ada dalam Al-Qur'an. Hadis datang searah dengan Al-Qur'an, menguatkan ketentuannya.</p>
+      <p style="margin-top:8px;"><strong>Contoh:</strong> Al-Qur'an memerintahkan shalat (QS. Al-Baqarah: 43), maka hadis memperkuat: <em>"Shalatlah sebagaimana kalian melihat aku shalat."</em></p>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">📖</span> 2. Bayan Tafsir (بيان تفسير)</h4>
+      <p><strong>Definisi:</strong> Hadis berfungsi untuk <strong>menjelaskan dan menafsirkan</strong> ayat-ayat Al-Qur'an yang masih bersifat umum (mujmal), mutlak, atau musytarak.</p>
+      <ul style="margin-top:8px;">
+        <li><strong>Mujmal → Mufassal:</strong> Menjelaskan yang global menjadi rinci (misal: tata cara shalat)</li>
+        <li><strong>Mutlaq → Muqayyad:</strong> Membatasi yang mutlak (misal: hukum potong tangan)</li>
+        <li><strong>Musytarak:</strong> Menentukan makna kata yang bermakna banyak</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">⚖️</span> 3. Bayan Tasyri' (بيان تشريع)</h4>
+      <p><strong>Definisi:</strong> Hadis berfungsi untuk <strong>menetapkan hukum baru</strong> yang tidak disebutkan secara eksplisit dalam Al-Qur'an. Hadis menjadi sumber hukum yang berdiri sendiri.</p>
+      <p style="margin-top:8px;"><strong>Contoh:</strong> Haramnya memakai emas dan sutra bagi laki-laki, larangan menikahi bibi bersamaan dengan keponakannya, dsb.</p>
+    </div>
+
+    <div class="card">
+      <h4><span class="icon">🔄</span> 4. Bayan Nasakh (بيان نسخ)</h4>
+      <p><strong>Definisi:</strong> Sebagian ulama menambahkan fungsi hadis untuk <strong>menghapus (menasakh) hukum</strong> dalam Al-Qur'an. Namun ini adalah pendapat yang diperdebatkan. Mayoritas ulama menolak hadis ahad bisa menasakh Al-Qur'an.</p>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p8',null)">← Materi 8</button>
+    <button class="nav-btn primary" onclick="showPage('p10',null)">Materi 10: Syarat Perawi →</button>
+  </div>
+</div>
+
+<!-- PAGE 10 -->
+<div id="p10" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 10</div>
+    <h1 class="page-title">Syarat-Syarat <span>Perawi Hadis</span></h1>
+    <p class="page-desc">Kriteria dan persyaratan yang harus dipenuhi oleh seorang perawi agar riwayatnya dapat diterima.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Dua Syarat Utama Perawi</div>
+    <div class="grid2">
+      <div class="card" style="border-color:rgba(201,168,76,0.3);">
+        <h4><span class="icon">🕌</span> 1. Adil (العدالة)</h4>
+        <p>Perawi harus memiliki sifat adil, yang mencakup empat hal pokok:</p>
+        <ul style="margin-top:8px;">
+          <li>Islam (bukan kafir)</li>
+          <li>Baligh (dewasa)</li>
+          <li>Berakal sehat</li>
+          <li>Tidak fasiq (tidak melakukan dosa besar)</li>
+          <li>Menjaga muru'ah (harga diri/kehormatan)</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(26,95,110,0.4);">
+        <h4><span class="icon">🧠</span> 2. Dhabith (الضبط)</h4>
+        <p>Perawi harus memiliki kekuatan hafalan dan pemahaman:</p>
+        <ul style="margin-top:8px;">
+          <li><strong>Dhabth Shadr:</strong> Hafal kuat dalam hati/ingatan</li>
+          <li><strong>Dhabth Kitab:</strong> Terjaga tulisannya dari pemalsuan</li>
+          <li>Mampu menyampaikan hafalan kapan saja</li>
+          <li>Tidak sering lupa atau keliru</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Syarat-Syarat Lengkap Perawi</div>
+    <div class="card">
+      <h4><span class="icon">①</span> Islam</h4>
+      <p>Perawi wajib beragama Islam. Riwayat dari orang kafir tidak dapat diterima karena dikhawatirkan adanya penipuan dalam menyampaikan hadis Nabi ﷺ.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">②</span> Baligh</h4>
+      <p>Perawi harus sudah dewasa. Namun periwayatan anak kecil bisa diterima jika ia menerima hadis sewaktu kecil lalu meriwayatkannya setelah dewasa — yang dinilai adalah saat ia menyampaikan hadis tersebut.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">③</span> Berakal ('Aqil)</h4>
+      <p>Perawi harus berakal sehat. Riwayat orang gila (majnun) atau yang kehilangan akal tidak diterima sama sekali.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">④</span> Tidak Fasiq</h4>
+      <p>Perawi tidak boleh melakukan dosa-dosa besar secara terang-terangan. Dosa kecil yang jarang masih bisa dimaafkan, tetapi dosa besar yang menjadi kebiasaan menjadikan perawi tertolak.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">⑤</span> Menjaga Muru'ah</h4>
+      <p>Perawi harus menjaga kehormatan dan martabatnya. Melakukan hal-hal yang merendahkan diri di masyarakat (misalnya makan di jalanan tanpa alasan, bercanda berlebihan) bisa menjatuhkan kredibilitasnya.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">⑥</span> Dhabith (Kuat Hafalan)</h4>
+      <p>Perawi harus memiliki hafalan yang kuat dan akurat. Ini adalah syarat yang paling teknis — perawi yang sering lupa, salah, atau bertentangan dengan perawi yang lebih terpercaya, maka hadisnya dilemahkan.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Cara Mengetahui Ke-'Adilan Perawi</div>
+    <div class="grid2">
+      <div class="card">
+        <h4><span class="icon">👥</span> Kesepakatan Ulama</h4>
+        <p>Jika para ulama sepakat bahwa seorang perawi adalah adil, maka kita tidak perlu mencari bukti lain. Contoh: Para sahabat Nabi ﷺ semuanya dianggap adil (kulluhum 'udul).</p>
+      </div>
+      <div class="card">
+        <h4><span class="icon">🔍</span> Penilaian Ulama Rijal</h4>
+        <p>Melalui ilmu Jarh wa Ta'dil, para ulama mengkaji dan menilai setiap perawi secara individual berdasarkan biografi, perilaku, dan riwayat hidupnya.</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p9',null)">← Materi 9</button>
+    <button class="nav-btn primary" onclick="showPage('p11',null)">Materi 11: Bayan Taqrir, Tafsir & Tasyri' →</button>
+  </div>
+</div>
+
+<!-- PAGE 11 -->
+<div id="p11" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 11</div>
+    <h1 class="page-title">Bayan Taqrir, Tafsir <span>& Tasyri'</span></h1>
+    <p class="page-desc">Penjelasan mendalam tentang tiga fungsi utama hadis terhadap Al-Qur'an: Taqrir, Tafsir, dan Tasyri'.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">1. Bayan Taqrir (بيان تقرير)</div>
+    <div class="arabic-box">
+      <div class="arabic-text">بيان التقرير: تأكيد الحديث لما جاء في القرآن الكريم</div>
+      <div class="arabic-label">Definisi Bayan Taqrir</div>
+    </div>
+    <div class="card">
+      <p>Bayan Taqrir disebut juga <strong>Bayan Ta'kid</strong> (penguatan). Hadis berfungsi memperkuat, menegaskan, dan mengokohkan ketentuan hukum yang sudah ada dalam Al-Qur'an. Tidak ada pertentangan, hadis sepenuhnya sejalan dengan Al-Qur'an.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">📌</span> Sub-Jenis Bayan Taqrir</h4>
+      <ul>
+        <li><strong>Taqrir Nash:</strong> Menguatkan nash Al-Qur'an secara langsung</li>
+        <li><strong>Taqrir Hukm:</strong> Menguatkan hukum yang terkandung dalam Al-Qur'an</li>
+        <li><strong>Taqrir Mafhum:</strong> Menguatkan pemahaman yang diambil dari Al-Qur'an</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. Bayan Tafsir (بيان تفسير)</div>
+    <div class="arabic-box">
+      <div class="arabic-text">بيان التفسير: شرح الحديث وتوضيحه لما أُجمل أو أُطلق أو خُصِّص في القرآن</div>
+      <div class="arabic-label">Definisi Bayan Tafsir</div>
+    </div>
+    <div class="card">
+      <p>Bayan Tafsir adalah fungsi hadis untuk <strong>menjelaskan, merinci, dan menerangkan</strong> ayat-ayat Al-Qur'an. Ini adalah fungsi terpenting hadis.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">📖</span> Tiga Bentuk Bayan Tafsir</h4>
+      <ul>
+        <li>
+          <strong>Bayan Mujmal (Merinci yang Global):</strong><br>
+          Al-Qur'an menyebut shalat, zakat, haji secara umum → Hadis merinci tata caranya secara detail
+        </li>
+        <li style="margin-top:8px;">
+          <strong>Bayan Muthlaq (Membatasi yang Mutlak):</strong><br>
+          QS. Al-Maidah: 38 → "Potong tangan pencuri" (mutlak) → Hadis membatasi: senilai seperempat dinar ke atas, diambil dari tempat penyimpanan yang layak
+        </li>
+        <li style="margin-top:8px;">
+          <strong>Bayan 'Am (Mengkhususkan yang Umum):</strong><br>
+          Al-Qur'an melarang menikahi ibu dan anak (umum) → Hadis mengkhususkan larangan yang lebih spesifik lagi
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. Bayan Tasyri' (بيان تشريع)</div>
+    <div class="arabic-box">
+      <div class="arabic-text">بيان التشريع: إنشاء الحديث حكماً جديداً لا يوجد في القرآن الكريم</div>
+      <div class="arabic-label">Definisi Bayan Tasyri'</div>
+    </div>
+    <div class="card">
+      <p>Bayan Tasyri' adalah fungsi hadis untuk <strong>menetapkan hukum baru</strong> yang tidak terdapat dalam Al-Qur'an. Hadis di sini bertindak sebagai sumber hukum yang mandiri dan tidak sekadar penjelas Al-Qur'an.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">⚖️</span> Contoh Hukum dari Bayan Tasyri'</h4>
+      <ul>
+        <li>Haramnya memakai emas dan sutra bagi laki-laki</li>
+        <li>Haramnya binatang buas yang bertaring dan burung yang berkuku tajam</li>
+        <li>Haramnya menikahi seorang wanita bersama bibi (dari pihak ayah maupun ibu)nya</li>
+        <li>Kewajiban zakat fitrah</li>
+        <li>Hukum rajam bagi pezina yang sudah menikah</li>
+      </ul>
+    </div>
+    <div class="def-box">
+      <p>✦ Dasar hukum bayan tasyri': QS. An-Najm: 3-4 — "Dan ia tidak berbicara berdasarkan hawa nafsu. Tidak lain (ucapannya) adalah wahyu yang diwahyukan kepadanya."</p>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p10',null)">← Materi 10</button>
+    <button class="nav-btn primary" onclick="showPage('p12',null)">Materi 12: Contoh Fungsi Hadis →</button>
+  </div>
+</div>
+
+<!-- PAGE 12 -->
+<div id="p12" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 12</div>
+    <h1 class="page-title">Contoh <span>Fungsi Hadis terhadap Al-Qur'an</span></h1>
+    <p class="page-desc">Contoh-contoh konkret dari setiap fungsi hadis: Bayan Taqrir, Tafsir, dan Tasyri'.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Contoh Bayan Taqrir (Memperkuat Al-Qur'an)</div>
+    <div class="card">
+      <h4><span class="icon">📌</span> Contoh 1: Perintah Shalat</h4>
+      <div class="arabic-box" style="margin:10px 0 6px;">
+        <div class="arabic-text" style="font-size:16px;">وَأَقِيمُوا الصَّلَاةَ (QS. Al-Baqarah: 43)</div>
+        <div class="arabic-label">Ayat Al-Qur'an tentang shalat</div>
+      </div>
+      <p>Diperkuat oleh hadis:</p>
+      <div class="hadis-example">
+        <div class="hadis-arabic">صَلُّوا كَمَا رَأَيْتُمُونِي أُصَلِّي</div>
+        <div class="hadis-terjemah">"Shalatlah kalian sebagaimana kalian melihat aku shalat." (HR. Bukhari)</div>
+      </div>
+    </div>
+    <div class="card">
+      <h4><span class="icon">📌</span> Contoh 2: Perintah Puasa Ramadhan</h4>
+      <p>Al-Qur'an: QS. Al-Baqarah: 183 — "Diwajibkan atas kamu berpuasa..."</p>
+      <div class="hadis-example">
+        <div class="hadis-arabic">بُنِيَ الإِسْلامُ عَلَى خَمْسٍ... وَصَوْمِ رَمَضَانَ</div>
+        <div class="hadis-terjemah">"Islam dibangun atas lima perkara... dan puasa Ramadhan." (HR. Bukhari-Muslim)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Contoh Bayan Tafsir (Menjelaskan Al-Qur'an)</div>
+    <div class="card">
+      <h4><span class="icon">📖</span> Contoh 1: Merinci Shalat (Mujmal → Mufashal)</h4>
+      <p>Al-Qur'an hanya memerintahkan "dirikanlah shalat" tanpa merinci jumlah rakaat, waktu, dan tata caranya. Maka hadis-hadis Nabi ﷺ merinci seluruh tata cara shalat secara lengkap.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">📖</span> Contoh 2: Membatasi Potong Tangan (Muthlaq → Muqayyad)</h4>
+      <p>Al-Qur'an: "Potonglah tangan pencuri laki-laki dan perempuan." (QS. Al-Maidah: 38) — ini mutlak.</p>
+      <div class="hadis-example">
+        <div class="hadis-terjemah">Hadis merinci: Tangan dipotong jika mencuri senilai seperempat dinar ke atas, dari tempat penyimpanan yang layak, dengan seizin pemilik. (HR. Bukhari-Muslim)</div>
+      </div>
+    </div>
+    <div class="card">
+      <h4><span class="icon">📖</span> Contoh 3: Mengkhususkan Larangan Waris</h4>
+      <p>Al-Qur'an: Ayat waris bersifat umum untuk semua Muslim. Hadis mengkhususkan:</p>
+      <div class="hadis-example">
+        <div class="hadis-arabic">لا يَرِثُ الْمُسْلِمُ الْكَافِرَ وَلا الْكَافِرُ الْمُسْلِمَ</div>
+        <div class="hadis-terjemah">"Muslim tidak mewarisi kafir, dan kafir tidak mewarisi Muslim." (HR. Bukhari)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Contoh Bayan Tasyri' (Hukum Baru dari Hadis)</div>
+    <div class="card">
+      <h4><span class="icon">⚖️</span> Contoh 1: Haramnya Emas untuk Laki-Laki</h4>
+      <div class="hadis-example">
+        <div class="hadis-arabic">أُحِلَّ الذَّهَبُ وَالْحَرِيرُ لِإِنَاثِ أُمَّتِي وَحُرِّمَ عَلَى ذُكُورِهَا</div>
+        <div class="hadis-terjemah">"Emas dan sutra dihalalkan bagi perempuan umatku dan diharamkan bagi laki-lakinya." (HR. Ahmad, Nasa'i) — Hukum ini tidak disebutkan di Al-Qur'an.</div>
+      </div>
+    </div>
+    <div class="card">
+      <h4><span class="icon">⚖️</span> Contoh 2: Zakat Fitrah</h4>
+      <div class="hadis-example">
+        <div class="hadis-terjemah">"Rasulullah ﷺ mewajibkan zakat fitrah satu sha' kurma atau satu sha' gandum atas setiap Muslim, merdeka atau hamba sahaya, laki-laki atau perempuan, anak kecil atau dewasa." (HR. Bukhari) — Tidak disebutkan secara eksplisit di Al-Qur'an.</div>
+      </div>
+    </div>
+    <div class="card">
+      <h4><span class="icon">⚖️</span> Contoh 3: Larangan Binatang Buas</h4>
+      <div class="hadis-example">
+        <div class="hadis-arabic">كُلُّ ذِي نَابٍ مِنَ السِّبَاعِ فَأَكْلُهُ حَرَامٌ</div>
+        <div class="hadis-terjemah">"Setiap binatang buas yang bertaring, memakannya adalah haram." (HR. Muslim) — Hukum baru dari hadis yang tidak ada di Al-Qur'an.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p11',null)">← Materi 11</button>
+    <button class="nav-btn primary" onclick="showPage('p13',null)">Materi 13: Hadis Shahih, Hasan & Dha'if →</button>
+  </div>
+</div>
+
+<!-- PAGE 13 -->
+<div id="p13" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 13</div>
+    <h1 class="page-title">Hadis <span>Shahih, Hasan & Dha'if</span></h1>
+    <p class="page-desc">Klasifikasi kualitas hadis berdasarkan kekuatan sanad dan matan, beserta syarat dan contoh masing-masing.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">1. Hadis Shahih (الحديث الصحيح)</div>
+    <div class="arabic-box">
+      <div class="arabic-text">الحديث الصحيح: ما اتصل سنده بنقل العدل الضابط عن مثله إلى منتهاه من غير شذوذ ولا علة</div>
+      <div class="arabic-label">Definisi Hadis Shahih (Imam an-Nawawi)</div>
+    </div>
+    <div class="card">
+      <h4><span class="icon">✅</span> Syarat Hadis Shahih (5 Syarat)</h4>
+      <ul>
+        <li><strong>Sanadnya Bersambung (Ittishal as-Sanad):</strong> Setiap perawi bertemu langsung dengan perawi di atasnya</li>
+        <li><strong>Perawinya Adil ('Adalah ar-Rawi):</strong> Setiap perawi memenuhi syarat keadilan</li>
+        <li><strong>Perawinya Dhabith (Dhabth ar-Rawi):</strong> Hafalan kuat dan akurat</li>
+        <li><strong>Tidak Syadz (Adam asy-Syudzudz):</strong> Tidak bertentangan dengan riwayat yang lebih kuat</li>
+        <li><strong>Tidak Ber-'Illat (Adam al-'Illah):</strong> Tidak ada cacat tersembunyi yang melemahkan</li>
+      </ul>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h4><span class="icon">📚</span> Tingkatan Shahih</h4>
+        <ul>
+          <li>Shahih li-dzatihi (kuat sendiri)</li>
+          <li>Shahih li-ghairihi (kuat karena pendukung)</li>
+          <li>Paling Shahih: Bukhari-Muslim (Muttafaq 'alaih)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4><span class="icon">📖</span> Kitab Hadis Shahih</h4>
+        <ul>
+          <li>Shahih Bukhari</li>
+          <li>Shahih Muslim</li>
+          <li>Shahih Ibnu Khuzaimah</li>
+          <li>Shahih Ibnu Hibban</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. Hadis Hasan (الحديث الحسن)</div>
+    <div class="def-box">
+      <p>Hadis Hasan adalah hadis yang memenuhi syarat shahih, KECUALI salah satu perawinya sedikit lemah hafalannya (kurang dhabith), namun masih dalam batas yang bisa ditoleransi.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">🔶</span> Perbedaan dengan Shahih</h4>
+      <p>Syarat hadis Hasan sama dengan Shahih, kecuali pada <strong>kedhabitan perawi</strong> — perawi hadis hasan sedikit di bawah standar dhabith hadis shahih, namun masih jauh dari lemah. Imam Tirmidzi banyak menggunakan istilah "Hasan Shahih".</p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h4><span class="icon">📚</span> Jenis Hasan</h4>
+        <ul>
+          <li>Hasan li-dzatihi</li>
+          <li>Hasan li-ghairihi (dha'if yang naik derajat karena banyak jalur)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4><span class="icon">⚖️</span> Hukum Menggunakan</h4>
+        <p>Hadis Hasan bisa dijadikan hujjah (dalil hukum) oleh para ulama, hampir setara dengan hadis shahih dalam penetapan hukum fiqih.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. Hadis Dha'if (الحديث الضعيف)</div>
+    <div class="def-box">
+      <p>Hadis Dha'if adalah hadis yang tidak memenuhi salah satu atau lebih syarat hadis Shahih/Hasan. Semakin banyak syarat yang tidak terpenuhi, semakin lemah derajatnya.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">❌</span> Sebab-Sebab Kelemahan Hadis</h4>
+      <ul>
+        <li><strong>Cacat pada Sanad:</strong> Sanad terputus, perawi majhul (tidak dikenal), perawi tidak bertemu</li>
+        <li><strong>Cacat pada Perawi:</strong> Fasiq, lemah hafalan, banyak keliru, tertuduh berdusta</li>
+        <li><strong>Cacat pada Matan:</strong> Bertentangan dengan Al-Qur'an, hadis shahih, atau akal sehat</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4><span class="icon">📋</span> Tingkatan Hadis Dha'if (dari lemah ke paling lemah)</h4>
+      <ul>
+        <li><span class="pill pill-yellow">Dha'if</span> — lemah biasa</li>
+        <li><span class="pill pill-yellow">Dha'if Jiddan</span> — sangat lemah</li>
+        <li><span class="pill pill-red">Munkar</span> — bertentangan dengan riwayat yang tsiqah</li>
+        <li><span class="pill pill-red">Matruk</span> — ditinggalkan (perawi tertuduh berdusta)</li>
+        <li><span class="pill pill-red">Maudhu'</span> — palsu/diada-adakan (tingkat paling buruk)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Perbandingan Tiga Jenis Hadis</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspek</th><th>Shahih</th><th>Hasan</th><th>Dha'if</th></tr></thead>
+        <tbody>
+          <tr><td>Sanad bersambung</td><td><span class="pill pill-green">✅ Ya</span></td><td><span class="pill pill-green">✅ Ya</span></td><td><span class="pill pill-red">❌ Tidak/Tidak selalu</span></td></tr>
+          <tr><td>Perawi adil</td><td><span class="pill pill-green">✅ Ya</span></td><td><span class="pill pill-green">✅ Ya</span></td><td><span class="pill pill-red">❌ Tidak terjamin</span></td></tr>
+          <tr><td>Perawi dhabith</td><td><span class="pill pill-green">✅ Sempurna</span></td><td><span class="pill pill-yellow">🔶 Kurang sedikit</span></td><td><span class="pill pill-red">❌ Lemah</span></td></tr>
+          <tr><td>Tidak syadz</td><td><span class="pill pill-green">✅ Ya</span></td><td><span class="pill pill-green">✅ Ya</span></td><td><span class="pill pill-red">Bisa syadz</span></td></tr>
+          <tr><td>Tidak ber-'illat</td><td><span class="pill pill-green">✅ Ya</span></td><td><span class="pill pill-green">✅ Ya</span></td><td><span class="pill pill-red">Bisa ber-'illat</span></td></tr>
+          <tr><td>Bisa dijadikan dalil</td><td><span class="pill pill-green">✅ Ya</span></td><td><span class="pill pill-green">✅ Ya</span></td><td><span class="pill pill-red">❌ Tidak (kecuali fadha'il amal)</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p12',null)">← Materi 12</button>
+    <button class="nav-btn primary" onclick="showPage('p14',null)">Materi 14: Hadis Mutawatir & Ahad →</button>
+  </div>
+</div>
+
+<!-- PAGE 14 -->
+<div id="p14" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 14</div>
+    <h1 class="page-title">Hadis Mutawatir & Ahad <span>sebagai Dasar Hukum</span></h1>
+    <p class="page-desc">Kedudukan hadis mutawatir dan hadis ahad dalam penetapan hukum Islam beserta klasifikasinya.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">1. Hadis Mutawatir (الحديث المتواتر)</div>
+    <div class="arabic-box">
+      <div class="arabic-text">المتواتر: ما رواه عدد كثير يستحيل تواطؤهم على الكذب</div>
+      <div class="arabic-label">Definisi Hadis Mutawatir</div>
+    </div>
+    <div class="card">
+      <p>Hadis Mutawatir adalah hadis yang diriwayatkan oleh jumlah perawi yang sangat banyak di setiap tingkatan sanadnya, sehingga mustahil mereka bersepakat untuk berdusta. Hadis ini memberikan keyakinan (<em>qath'iyyah</em>) yang pasti.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">📋</span> Syarat Hadis Mutawatir</h4>
+      <ul>
+        <li>Diriwayatkan oleh banyak perawi di setiap tingkatan (minimal 10 menurut sebagian ulama)</li>
+        <li>Mustahil mereka bersepakat untuk berdusta</li>
+        <li>Bersandarkan pada sesuatu yang bisa dijangkau indera</li>
+        <li>Jumlah perawi sama banyaknya dari awal sampai akhir sanad</li>
+      </ul>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h4><span class="icon">①</span> Mutawatir Lafdzi</h4>
+        <p>Redaksi dan maknanya diriwayatkan oleh banyak perawi dengan lafaz yang sama persis. Contoh: Hadis <em>"Barangsiapa berdusta atas namaku dengan sengaja..."</em></p>
+      </div>
+      <div class="card">
+        <h4><span class="icon">②</span> Mutawatir Ma'nawi</h4>
+        <p>Diriwayatkan dengan lafaz berbeda-beda namun maknanya sama. Contoh: Hadis-hadis tentang mengangkat tangan saat berdoa, meskipun redaksinya bervariasi.</p>
+      </div>
+    </div>
+    <div class="def-box">
+      <p>✦ <strong>Kedudukan Hukum:</strong> Hadis Mutawatir menghasilkan ilmu yang pasti (qath'i). Mengingkari hadis mutawatir bisa menjadikan seseorang kafir karena sama dengan mengingkari sesuatu yang sudah pasti dari agama.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. Hadis Ahad (الحديث الآحاد)</div>
+    <div class="card">
+      <p>Hadis Ahad adalah hadis yang tidak mencapai derajat mutawatir, yaitu diriwayatkan oleh satu, dua, atau beberapa orang yang tidak memenuhi syarat mutawatir. Hadis ahad menghasilkan <em>zhann</em> (dugaan kuat), bukan keyakinan pasti.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon">📊</span> Klasifikasi Hadis Ahad</h4>
+      <div style="margin-top:8px;">
+        <div style="margin-bottom:10px;">
+          <span class="pill pill-green" style="margin-right:8px;">Masyhur</span>
+          <span style="font-size:13px; color:rgba(249,244,232,0.75);">Diriwayatkan oleh 3 orang atau lebih di setiap tingkatan, namun tidak mencapai mutawatir. Disebut juga <em>hadis mustafidh</em>.</span>
+        </div>
+        <div style="margin-bottom:10px;">
+          <span class="pill pill-yellow" style="margin-right:8px;">Aziz</span>
+          <span style="font-size:13px; color:rgba(249,244,232,0.75);">Diriwayatkan oleh minimal 2 orang perawi di setiap tingkatan sanad.</span>
+        </div>
+        <div>
+          <span class="pill pill-blue" style="margin-right:8px;">Gharib</span>
+          <span style="font-size:13px; color:rgba(249,244,232,0.75);">Diriwayatkan oleh hanya 1 orang perawi dalam salah satu tingkatan sanad. Disebut juga <em>fard</em>.</span>
+        </div>
+      </div>
+    </div>
+    <div class="def-box">
+      <p>✦ <strong>Kedudukan Hukum:</strong> Hadis Ahad yang shahih tetap wajib diamalkan dan dapat dijadikan dalil hukum syar'i, meskipun menghasilkan zhann (dugaan kuat) bukan keyakinan pasti seperti mutawatir. Para ulama sepakat bahwa hadis ahad shahih wajib diamalkan.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Perbandingan Mutawatir dan Ahad</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspek</th><th>Mutawatir</th><th>Ahad</th></tr></thead>
+        <tbody>
+          <tr><td>Jumlah perawi</td><td>Sangat banyak (mustahil berdusta)</td><td>Satu atau beberapa orang</td></tr>
+          <tr><td>Hasil pengetahuan</td><td><span class="pill pill-green">Qath'i (pasti)</span></td><td><span class="pill pill-yellow">Zhanni (dugaan kuat)</span></td></tr>
+          <tr><td>Wajib diamalkan</td><td><span class="pill pill-green">Ya (mutlak)</span></td><td><span class="pill pill-green">Ya (jika shahih)</span></td></tr>
+          <tr><td>Mengingkarinya</td><td>Bisa kufur</td><td>Dosa besar, bukan kufur</td></tr>
+          <tr><td>Jumlah hadis</td><td>Sedikit sekali</td><td>Mayoritas hadis</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p13',null)">← Materi 13</button>
+    <button class="nav-btn primary" onclick="showPage('p15',null)">Materi 15: Keahlian Ulama Kutubus Sittah →</button>
+  </div>
+</div>
+
+<!-- PAGE 15 -->
+<div id="p15" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 15</div>
+    <h1 class="page-title">Keahlian Ulama <span>Kutubus Sittah</span></h1>
+    <p class="page-desc">Bidang keahlian keilmuan dari enam imam penyusun kitab hadis induk (Kutubus Sittah).</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Apa itu Kutubus Sittah?</div>
+    <div class="def-box">
+      <p>Kutubus Sittah (الكتب الستة) berarti "Enam Kitab Induk" hadis yang menjadi rujukan utama umat Islam. Keenam kitab ini adalah: Shahih Bukhari, Shahih Muslim, Sunan Abu Dawud, Jami' Tirmidzi, Sunan Nasa'i, dan Sunan Ibnu Majah.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Keahlian Setiap Imam</div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">1. Imam al-Bukhari</div>
+      <div class="ulama-name-ar">محمد بن إسماعيل البخاري</div>
+      <div class="ulama-book">📚 Kitab: Shahih Bukhari</div>
+      <div class="ulama-info">Dikenal sebagai <strong>Amirul Mukminin fil Hadits</strong> (pemimpin tertinggi para ahli hadis). Beliau memiliki keahlian yang tak tertandingi dalam:</div>
+      <div class="ulama-keahlian">
+        <span class="keahlian-tag">Seleksi Hadis Sangat Ketat</span>
+        <span class="keahlian-tag">Ilmu Rijal (Biografi Perawi)</span>
+        <span class="keahlian-tag">Ilmu 'Illal (Cacat Tersembunyi)</span>
+        <span class="keahlian-tag">Istinbath Hukum Fiqih</span>
+        <span class="keahlian-tag">Hafalan 600.000 hadis</span>
+        <span class="keahlian-tag">Klasifikasi Bab/Tema Hadis</span>
+      </div>
+    </div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">2. Imam Muslim</div>
+      <div class="ulama-name-ar">مسلم بن الحجاج النيسابوري</div>
+      <div class="ulama-book">📚 Kitab: Shahih Muslim</div>
+      <div class="ulama-info">Murid terbaik Imam Bukhari. Keahlian utamanya adalah:</div>
+      <div class="ulama-keahlian">
+        <span class="keahlian-tag">Penyusunan Sistematis</span>
+        <span class="keahlian-tag">Menghimpun Semua Jalur Hadis</span>
+        <span class="keahlian-tag">Ilmu Mukhtalif al-Hadits</span>
+        <span class="keahlian-tag">Metodologi Seleksi Ketat</span>
+        <span class="keahlian-tag">Analisis Sanad Mendalam</span>
+      </div>
+    </div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">3. Imam Abu Dawud</div>
+      <div class="ulama-name-ar">سليمان بن الأشعث السجستاني</div>
+      <div class="ulama-book">📚 Kitab: Sunan Abu Dawud</div>
+      <div class="ulama-info">Spesialis dalam hadis-hadis hukum (fiqih). Keahliannya:</div>
+      <div class="ulama-keahlian">
+        <span class="keahlian-tag">Fiqih al-Hadits</span>
+        <span class="keahlian-tag">Hadis-Hadis Hukum</span>
+        <span class="keahlian-tag">Mendeteksi Hadis Lemah</span>
+        <span class="keahlian-tag">Komentar atas Kualitas Hadis</span>
+        <span class="keahlian-tag">Ilmu Nasikh-Mansukh</span>
+      </div>
+    </div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">4. Imam at-Tirmidzi</div>
+      <div class="ulama-name-ar">محمد بن عيسى الترمذي</div>
+      <div class="ulama-book">📚 Kitab: Jami' at-Tirmidzi (Sunan at-Tirmidzi)</div>
+      <div class="ulama-info">Dikenal karena kitabnya yang mencantumkan penilaian kualitas hadis secara eksplisit. Keahliannya:</div>
+      <div class="ulama-keahlian">
+        <span class="keahlian-tag">Kritik Hadis Terbuka</span>
+        <span class="keahlian-tag">Istilah Hadis Hasan</span>
+        <span class="keahlian-tag">Fiqih Lintas Mazhab</span>
+        <span class="keahlian-tag">Hadis Fadha'il Amal</span>
+        <span class="keahlian-tag">Penilaian Eksplisit</span>
+      </div>
+    </div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">5. Imam an-Nasa'i</div>
+      <div class="ulama-name-ar">أحمد بن شعيب النسائي</div>
+      <div class="ulama-book">📚 Kitab: Sunan an-Nasa'i (al-Mujtaba)</div>
+      <div class="ulama-info">Dikenal paling ketat dalam menilai perawi setelah Imam Muslim. Keahliannya:</div>
+      <div class="ulama-keahlian">
+        <span class="keahlian-tag">Jarh wa Ta'dil Ketat</span>
+        <span class="keahlian-tag">Mendeteksi Perbedaan Sanad</span>
+        <span class="keahlian-tag">Ilmu 'Illal Hadis</span>
+        <span class="keahlian-tag">Kritik Perawi Rinci</span>
+        <span class="keahlian-tag">Seleksi Perawi Sangat Selektif</span>
+      </div>
+    </div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">6. Imam Ibnu Majah</div>
+      <div class="ulama-name-ar">محمد بن يزيد القزويني</div>
+      <div class="ulama-book">📚 Kitab: Sunan Ibnu Majah</div>
+      <div class="ulama-info">Beliau adalah yang paling akhir dimasukkan ke dalam Kutubus Sittah. Keahliannya:</div>
+      <div class="ulama-keahlian">
+        <span class="keahlian-tag">Menghimpun Hadis Langka</span>
+        <span class="keahlian-tag">Fiqih Ibadah & Muamalah</span>
+        <span class="keahlian-tag">Penyusunan Bab Sistematis</span>
+        <span class="keahlian-tag">Tafsir Al-Qur'an dengan Hadis</span>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p14',null)">← Materi 14</button>
+    <button class="nav-btn primary" onclick="showPage('p16',null)">Materi 16: Riwayat Hidup Ulama →</button>
+  </div>
+</div>
+
+<!-- PAGE 16 -->
+<div id="p16" class="content-page">
+  <div class="page-header">
+    <div class="page-badge">Materi 16</div>
+    <h1 class="page-title">Riwayat Hidup <span>Ulama Kutubus Sittah</span></h1>
+    <p class="page-desc">Biografi singkat enam imam hadis penyusun Kutubus Sittah.</p>
+  </div>
+
+  <div class="section">
+    <div class="ulama-card">
+      <div class="ulama-name">1. Imam al-Bukhari (194–256 H / 810–870 M)</div>
+      <div class="ulama-name-ar">أبو عبد الله محمد بن إسماعيل البخاري</div>
+      <div class="ulama-book">📚 Shahih Bukhari — 7.563 hadis (dengan pengulangan)</div>
+      <div class="ulama-info">
+        <strong>Nama Lengkap:</strong> Abu Abdillah Muhammad bin Ismail bin Ibrahim bin al-Mughirah al-Bukhari<br><br>
+        <strong>Tempat Lahir:</strong> Bukhara, Uzbekistan (sekarang) — 13 Syawal 194 H<br><br>
+        <strong>Wafat:</strong> Khartank, dekat Samarkand — 1 Syawal 256 H (usia 62 tahun)<br><br>
+        <strong>Guru-Guru:</strong> Imam Ahmad bin Hanbal, Ishaq bin Rahawaih, Ali bin al-Madini, Yahya bin Ma'in<br><br>
+        <strong>Murid-Murid:</strong> Imam Muslim, Imam Tirmidzi, Imam Nasa'i, Abu Hatim ar-Razi<br><br>
+        <strong>Kisah Inspiratif:</strong> Sejak kecil sudah hafal ribuan hadis. Ia memulai hafalan hadis sejak usia 10 tahun dan hafal 100.000 hadis shahih sebelum usia 18 tahun. Ia menyusun Shahih Bukhari selama 16 tahun dengan proses seleksi luar biasa ketat — dari 600.000 hadis yang ia hafal, hanya sekitar 7.563 yang lolos seleksi.
+      </div>
+    </div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">2. Imam Muslim (204–261 H / 820–875 M)</div>
+      <div class="ulama-name-ar">أبو الحسين مسلم بن الحجاج النيسابوري</div>
+      <div class="ulama-book">📚 Shahih Muslim — 5.362 hadis (tanpa pengulangan)</div>
+      <div class="ulama-info">
+        <strong>Nama Lengkap:</strong> Abu al-Husain Muslim bin al-Hajjaj bin Muslim al-Qusyairi al-Naisaburi<br><br>
+        <strong>Tempat Lahir:</strong> Naisabur, Iran — 204 H<br><br>
+        <strong>Wafat:</strong> Naisabur — 25 Rajab 261 H (usia 57 tahun)<br><br>
+        <strong>Guru-Guru:</strong> Imam Bukhari (guru terbesar), Yahya bin Yahya, Ahmad bin Hanbal, Qutaibah bin Sa'id<br><br>
+        <strong>Murid-Murid:</strong> Tirmidzi, Abu Hatim ar-Razi, Abu Isa at-Tirmidzi<br><br>
+        <strong>Kisah Inspiratif:</strong> Pernah melakukan perjalanan jauh ke berbagai negeri semata untuk mendapat satu hadis. Shahih Muslim terkenal karena sistematikanya yang rapi — semua jalur riwayat sebuah hadis dikumpulkan dalam satu bab.
+      </div>
+    </div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">3. Imam Abu Dawud (202–275 H / 817–889 M)</div>
+      <div class="ulama-name-ar">أبو داود سليمان بن الأشعث السجستاني</div>
+      <div class="ulama-book">📚 Sunan Abu Dawud — 5.274 hadis</div>
+      <div class="ulama-info">
+        <strong>Nama Lengkap:</strong> Abu Dawud Sulaiman bin al-Asy'ats bin Ishaq al-Azdi as-Sijistani<br><br>
+        <strong>Tempat Lahir:</strong> Sijistan (Sistan), Iran/Afghanistan — 202 H<br><br>
+        <strong>Wafat:</strong> Basrah, Irak — 16 Syawal 275 H (usia 73 tahun)<br><br>
+        <strong>Guru-Guru:</strong> Imam Ahmad bin Hanbal, Yahya bin Ma'in, Ishaq bin Rahawaih<br><br>
+        <strong>Murid-Murid:</strong> Tirmidzi, Nasa'i, Abu Hatim ar-Razi<br><br>
+        <strong>Kisah Inspiratif:</strong> Ia mengumpulkan 500.000 hadis lalu menyaring menjadi 5.274 untuk kitabnya. Ia sendiri berkata: "Aku tulis hadis Rasulullah ﷺ 500.000, lalu aku pilih untuk kitab ini 5.000-an. Cukuplah bagi seseorang dalam agamanya 4-5 hadis dari kitab ini."
+      </div>
+    </div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">4. Imam at-Tirmidzi (209–279 H / 824–892 M)</div>
+      <div class="ulama-name-ar">أبو عيسى محمد بن عيسى الترمذي</div>
+      <div class="ulama-book">📚 Jami' at-Tirmidzi — 3.956 hadis</div>
+      <div class="ulama-info">
+        <strong>Nama Lengkap:</strong> Abu Isa Muhammad bin Isa bin Saurah bin Musa bin adh-Dhahhak at-Tirmidzi<br><br>
+        <strong>Tempat Lahir:</strong> Tirmidz, Uzbekistan — 209 H<br><br>
+        <strong>Wafat:</strong> Tirmidz — 13 Rajab 279 H (usia 70 tahun)<br><br>
+        <strong>Guru-Guru:</strong> Imam Bukhari, Imam Muslim, Imam Abu Dawud, Ahmad bin Hanbal<br><br>
+        <strong>Kisah Inspiratif:</strong> Beliau menjadi buta di akhir usianya. Kitabnya unik karena mencantumkan penilaian kualitas setiap hadis (hasan, shahih, dha'if) dan pendapat berbagai mazhab fiqih. Beliaulah yang mempopulerkan istilah "Hadis Hasan."
+      </div>
+    </div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">5. Imam an-Nasa'i (215–303 H / 830–915 M)</div>
+      <div class="ulama-name-ar">أبو عبد الرحمن أحمد بن شعيب النسائي</div>
+      <div class="ulama-book">📚 Sunan an-Nasa'i (al-Mujtaba) — 5.761 hadis</div>
+      <div class="ulama-info">
+        <strong>Nama Lengkap:</strong> Abu Abdurrahman Ahmad bin Syu'aib bin Ali bin Sinan an-Nasa'i<br><br>
+        <strong>Tempat Lahir:</strong> Nasa, Khurasan (Turkmenistan sekarang) — 215 H<br><br>
+        <strong>Wafat:</strong> Palestina — 303 H (usia 88 tahun) — beliau wafat sebagai syahid<br><br>
+        <strong>Guru-Guru:</strong> Ishaq bin Rahawaih, Qutaibah bin Sa'id, Imam Ahmad bin Hanbal<br><br>
+        <strong>Kisah Inspiratif:</strong> Dikenal paling ketat dalam menilai perawi (bahkan lebih ketat dari Muslim). Beliau wafat secara tragis setelah dipukuli orang-orang yang marah karena beliau menulis kitab khusus tentang keutamaan Ali bin Abi Thalib ra.
+      </div>
+    </div>
+
+    <div class="ulama-card">
+      <div class="ulama-name">6. Imam Ibnu Majah (209–273 H / 824–887 M)</div>
+      <div class="ulama-name-ar">أبو عبد الله محمد بن يزيد ابن ماجه القزويني</div>
+      <div class="ulama-book">📚 Sunan Ibnu Majah — 4.341 hadis</div>
+      <div class="ulama-info">
+        <strong>Nama Lengkap:</strong> Abu Abdillah Muhammad bin Yazid ar-Rabi'i al-Qazwini, dikenal Ibn Majah<br><br>
+        <strong>Tempat Lahir:</strong> Qazwin, Iran — 209 H<br><br>
+        <strong>Wafat:</strong> Qazwin — 22 Ramadhan 273 H (usia 64 tahun)<br><br>
+        <strong>Guru-Guru:</strong> Ali bin Muhammad at-Tanafisi, Jabbarah bin al-Mughallas, Bisyr bin Adam<br><br>
+        <strong>Kisah Inspiratif:</strong> Beliau juga seorang mufassir (ahli tafsir) dan sejarawan. Sunan Ibnu Majah baru dimasukkan ke dalam Kutubus Sittah oleh Ibnu Thahir al-Maqdisi. Kitabnya mengandung beberapa hadis dha'if bahkan maudhu', yang menjadi bahan kajian tersendiri bagi para ulama hadis.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Ringkasan Kutubus Sittah</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Imam</th><th>Lahir</th><th>Wafat</th><th>Kitab</th><th>Jumlah Hadis</th></tr></thead>
+        <tbody>
+          <tr><td><strong>al-Bukhari</strong></td><td>194 H</td><td>256 H</td><td>Shahih Bukhari</td><td>7.563</td></tr>
+          <tr><td><strong>Muslim</strong></td><td>204 H</td><td>261 H</td><td>Shahih Muslim</td><td>5.362</td></tr>
+          <tr><td><strong>Abu Dawud</strong></td><td>202 H</td><td>275 H</td><td>Sunan Abu Dawud</td><td>5.274</td></tr>
+          <tr><td><strong>at-Tirmidzi</strong></td><td>209 H</td><td>279 H</td><td>Jami' Tirmidzi</td><td>3.956</td></tr>
+          <tr><td><strong>an-Nasa'i</strong></td><td>215 H</td><td>303 H</td><td>Sunan Nasa'i</td><td>5.761</td></tr>
+          <tr><td><strong>Ibnu Majah</strong></td><td>209 H</td><td>273 H</td><td>Sunan Ibnu Majah</td><td>4.341</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="showPage('p15',null)">← Materi 15</button>
+    <button class="nav-btn primary" onclick="showPage('home',null)">🏠 Kembali ke Beranda</button>
+  </div>
+</div>
+
+</main>
+
+<script>
+  function showPage(id, linkEl) {
+    // Hide all pages
+    document.querySelectorAll('.content-page').forEach(p => {
+      p.style.display = 'none';
+      p.classList.remove('active');
+    });
+
+    // Show target page
+    const target = document.getElementById(id);
+    if (target) {
+      target.style.display = 'block';
+      target.classList.add('active');
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    // Update nav active state
+    document.querySelectorAll('.nav-list a').forEach(a => a.classList.remove('active'));
+    if (linkEl) {
+      linkEl.classList.add('active');
+    } else {
+      // Find by page id
+      const map = {
+        'home': 0, 'p1': 1, 'p2': 2, 'p3': 3, 'p4': 4,
+        'p5': 5, 'p6': 6, 'p7': 7, 'p8': 8, 'p9': 9,
+        'p10': 10, 'p11': 11, 'p12': 12, 'p13': 13,
+        'p14': 14, 'p15': 15, 'p16': 16
+      };
+      const links = document.querySelectorAll('.nav-list a');
+      if (links[map[id]]) links[map[id]].classList.add('active');
+    }
+
+    // Close sidebar on mobile
+    if (window.innerWidth < 900) {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  // Init: show home
+  document.getElementById('home').style.display = 'block';
+</script>
+</body>
+</html>
